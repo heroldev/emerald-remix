@@ -27,25 +27,26 @@ static int RtcPrgm_TrySetScene(int);
 static void RtcPrgm_SetScene(int);
 static void RtcPrgm_HideScene(void);
 
-static const u8 sText_RtcProgram[] = _("RTC Reset");
-static const u8 sText_RtcRubySapphire[] = _("Ruby/Sapphire");
+static const u8 sText_RtcProgram[] = _("Real Time Clock Reset");
+static const u8 sText_RtcRubySapphire[] = _("Ruby/Sapphire/Emerald");
 static const u8 sText_RtcEmerald[] = _("Emerald");
-static const u8 sText_RtcWillBeResetPressA[] = _("The Berry Program on your POKéMON\n"
-                                                            "Ruby/Sapphire Game Pak will be updated.\n"
+static const u8 sText_RtcWillBeResetPressA[] = _("The Real Time Clock on your POKéMON Ruby,\n"
+                                                            "Sapphire, or Emerald Game Pak will be\n"
+                                                            "updated.\n"
                                                             "{COLOR RED}{SHADOW LIGHT_RED}Press the A Button.");
 static const u8 sText_RtcEnsureGBAConnectionMatches[] = _("Please ensure the connection of your\n"
                                                        "Game Boy Advance system matches this.\n"
                                                        "{COLOR RED}{SHADOW LIGHT_RED}YES: Press the A Button.\n"
                                                        "NO: Turn off the power and try again.");
 static const u8 sText_RtcTurnOffPowerHoldingStartSelect[] = _("Please turn on the power of POKéMON\n"
-                                                           "Ruby/Sapphire while holding START and\n"
-                                                           "SELECT simultaneously. Then, ensure\n"
+                                                           "Ruby/Sapphire/Emerald while holding START\n"
+                                                           "and SELECT simultaneously. Then, ensure\n"
                                                            "the picture above appears.");
 static const u8 sText_RtcTransmittingPleaseWait[] = _("Transmitting. Please wait.\n"
                                                    "{COLOR RED}{SHADOW LIGHT_RED}Please do not turn off the power or\n"
                                                    "unplug the Game Boy Advance Game\nLink Cable.");
 static const u8 sText_RtcPleaseFollowInstructionsOnScreen[] = _("Please follow the instructions on your\n"
-                                                             "POKéMON Ruby/Sapphire screen.");
+                                                             "POKéMON Ruby/Sapphire/Emerald screen.");
 static const u8 sText_RtcTransmissionFailureTryAgain[] = _("Transmission failure.\n"
                                                         "{COLOR RED}{SHADOW LIGHT_RED}Please try again.");
 
