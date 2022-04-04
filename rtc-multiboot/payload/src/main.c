@@ -83,6 +83,7 @@ static const char sVersionData[][2] = {
 };
 static const char sRubyTitleAndCode[ROM_GAME_TITLE_LEN] = "POKEMON RUBYAXV";
 static const char sSapphireTitleAndCode[ROM_GAME_TITLE_LEN] = "POKEMON SAPPAXP";
+static const char sEmeraldTitleAndCode[ROM_GAME_TITLE_LEN] = "POKEMON EMERBPE";
 static const u16 sDebugPals[20] = {
     RGB_BLACK,
     RGB_RED,
