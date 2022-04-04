@@ -335,7 +335,6 @@ SECTIONS {
         src/gym_leader_rematch.o(.text);
         src/battle_transition_frontier.o(.text);
         src/international_string_util.o(.text);
-        src/reset_rtc_program.o(.text);
     } =0
 
     script_data :
@@ -696,7 +695,6 @@ SECTIONS {
         data/mystery_gift.o(.rodata);
         src/m4a_tables.o(.rodata);
         data/sound_data.o(.rodata);
-        src/reset_rtc_program.o(.rodata);
     } =0
 
     song_data :
@@ -1259,7 +1257,6 @@ SECTIONS {
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
         data/multiboot_pokemon_colosseum.o(.rodata);
-        data/multiboot_rtc_program.o(.rodata);
     } =0
 
     anim_mon_front_pic_data __anim_mon_load_address :
