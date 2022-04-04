@@ -46,6 +46,7 @@ static void CB2_GoToClearSaveDataScreen(void);
 static void CB2_GoToResetRtcScreen(void);
 static void CB2_GoToBerryFixScreen(void);
 static void CB2_GoToCopyrightScreen(void);
+static void CB2_GoToResetRtcMultibootScreen(void);
 static void UpdateLegendaryMarkingColor(u8);
 
 static void SpriteCB_VersionBannerLeft(struct Sprite *sprite);
@@ -744,16 +745,16 @@ static void Task_TitleScreenPhase3(u8 taskId)
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
         SetMainCallback2(CB2_GoToResetRtcScreen);
     }
+    else if (JOY_HELD(RESET_RTC_MULTIBOOT_BUTTON_COMBO) == RESET_RTC_MULTIBOOT_BUTTON_COMBO) {
+        FadeOutBGM(4);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+        SetMainCallback2(CB2_GoToResetRtcMultibootScreen);
+    }
     else if (JOY_HELD(BERRY_UPDATE_BUTTON_COMBO) == BERRY_UPDATE_BUTTON_COMBO)
     {
         FadeOutBGM(4);
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
         SetMainCallback2(CB2_GoToBerryFixScreen);
-    }
-    else if (JOY_HELD(RESET_RTC_MULTIBOOT_BUTTON_COMBO) == RESET_RTC_MULTIBOOT_BUTTON_COMBO) {
-        FadeOutBGM(4);
-        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
-        SetMainCallback2(CB2_GoToResetRtcMultibootScreen);
     }
     else
     {
