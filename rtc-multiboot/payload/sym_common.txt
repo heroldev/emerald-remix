@@ -1,4 +1,0 @@
-    .include "main.o"
-    .include "rtc.o"
-    .include "save.o"
-    .include "agb_flash.o"

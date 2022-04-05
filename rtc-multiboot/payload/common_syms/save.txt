@@ -1,8 +1,0 @@
-gLastWrittenSector
-gLastSaveCounter
-gLastKnownGoodSector
-gDamagedSaveSectors
-gSaveCounter
-gReadWriteSector
-gIncrementalSectorId
-gFlashIdentIsValid
