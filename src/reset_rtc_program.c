@@ -32,7 +32,7 @@ static const u8 sText_RtcRubySapphire[] = _("Ruby/Sapphire/Emerald");
 static const u8 sText_RtcEmerald[] = _("Emerald");
 static const u8 sText_RtcWillBeResetPressA[] = _("The Real Time Clock on your POKéMON Ruby,\n"
                                                             "Sapphire, or Emerald Game Pak will be\n"
-                                                            "updated.\n"
+                                                            "reset.\n"
                                                             "{COLOR RED}{SHADOW LIGHT_RED}Press the A Button.");
 static const u8 sText_RtcEnsureGBAConnectionMatches[] = _("Please ensure the connection of your\n"
                                                        "Game Boy Advance system matches this.\n"
