@@ -1,27 +1,20 @@
 #include "global.h"
 #include "main.h"
 #include "rtc.h"
-#include "berry_fix_save.h"
-#include "event_data.h"
-#include "message_box.h"
+#include "rtc_reset.h"
 
 #define ROM_HEADER_MAGIC 0x96
 #define ROM_GAME_TITLE_LEN 15
 
-// States for the main BerryFix function
+// Task states for Task_ResetRtcScreen
 enum {
     STATE_INIT,
-    STATE_CHECK_RTC,
-    STATE_CHECK_FLASH,
-    STATE_READ_SAVE,
-    STATE_CHECK_TIME,
-    STATE_FIX_DATE,
-    STATE_NO_NEED_TO_FIX,
-    STATE_ERROR_YEAR,
-    STATE_FINISHED,
-    STATE_CHECK_PACIFIDLOG_TM,
-    STATE_FIX_PACIFIDLOG_TM,
-    STATE_ERROR
+    STATE_CHECK_SAVE,
+    STATE_START_SET_TIME,
+    STATE_WAIT_SET_TIME,
+    STATE_SAVE,
+    STATE_WAIT_EXIT,
+    STATE_EXIT,
 };
 
 // Return values for ValidateRomHeader
@@ -90,7 +83,6 @@ static const u16 sDebugPals[20] = {
     RGB_GREEN,
     RGB_BLUE
 };
-static const u16 sDebugDigitsGfx[] = INCBIN_U16("graphics/debug_digits.4bpp");
 
 void AgbMain(void)
 {
@@ -109,8 +101,8 @@ void AgbMain(void)
     for (;;)
     {
         VBlankIntrWait();
-        ReadKeys();
-        BerryFix(&gMainCallbackState, gUnusedBuffer, sSharedMem);
+        ReadKeys(); //what
+        BerryFix(&gMainCallbackState, gUnusedBuffer, sSharedMem); // TaskMainResetRtc call goes here
     }
 }
 
@@ -212,138 +204,6 @@ static void BerryFix(u32 * state, void * unused1, void * unused2)
     u8 year;
     switch (*state)
     {
-    case STATE_INIT:
-        // "The Berry Program Update will now begin..."
-        MessageBox_Display(MSG_WILL_NOW_UPDATE);
-        if (++sInitialWaitTimer >= 180)
-        {
-            sInitialWaitTimer = 0;
-            gUpdateSuccessful = 0;
-            switch (ValidateRomHeader())
-            {
-            case UPDATE_SAPPHIRE:
-            case UPDATE_RUBY:
-                ++(*state); // STATE_CHECK_RTC
-                break;
-            case INVALID: // Invalid header
-                *state = STATE_ERROR;
-                break;
-            case NO_UPDATE_SAPPHIRE:
-            case NO_UPDATE_RUBY:
-                *state = STATE_NO_NEED_TO_FIX;
-                break;
-            }
-        }
-        break;
-    case STATE_CHECK_RTC:
-        if (!BerryFix_TryInitRtc())
-            *state = STATE_ERROR;
-        else
-            ++(*state); // STATE_CHECK_FLASH
-        break;
-    case STATE_CHECK_FLASH:
-        if (BerryFix_IdentifyFlash() == TRUE)
-            ++(*state); // STATE_READ_SAVE
-        else
-            *state = STATE_ERROR;
-        break;
-    case STATE_READ_SAVE:
-        if (BerryFix_LoadSave(0) == SAVE_STATUS_OK)
-            ++(*state); // STATE_CHECK_TIME
-        else
-            *state = STATE_ERROR;
-        break;
-    case STATE_CHECK_TIME:
-        if (BerryFix_CalcTimeDifference(&year) == TRUE)
-        {
-            // Time difference is okay, only fix the date if
-            // the Berry Glitch hasn't happened yet (if year is 2000)
-            if (year == 0)
-                ++(*state); // STATE_FIX_DATE
-            else
-                *state = STATE_CHECK_PACIFIDLOG_TM;
-        }
-        else
-        {
-            // Time difference is incorrect, if the year is 2001
-            // then the Berry Glitch is occurring. If the year is
-            // not 2001 then some error has occurred.
-            if (year != 1)
-                *state = STATE_ERROR_YEAR;
-            else
-                ++(*state); // STATE_FIX_DATE
-        }
-        break;
-    case STATE_FIX_DATE:
-        // Set the clock forward to fix the Berry Glitch
-        // If the date is late enough that it is no
-        // longer affected then this does nothing.
-        BerryFix_TryFixDate();
-        gUpdateSuccessful |= 1;
-        *state = STATE_CHECK_PACIFIDLOG_TM;
-        break;
-    case STATE_CHECK_PACIFIDLOG_TM:
-        if (BerryFix_IsPacifidlogTMCorrect() == TRUE)
-            *state = STATE_FINISHED;
-        else
-            *state = STATE_FIX_PACIFIDLOG_TM;
-        break;
-    case STATE_FIX_PACIFIDLOG_TM:
-        // "Updating. the Berry Program. Please wait..."
-        MessageBox_Display(MSG_UPDATING);
-        if (BerryFix_ResetPacifidlogTM() == TRUE)
-        {
-            gUpdateSuccessful |= 1;
-            *state = STATE_FINISHED;
-        }
-        else
-        {
-            *state = STATE_ERROR;
-        }
-        break;
-    // The below 4 cases are all the possible end states
-    // The Berry Fix Program will remain in these states until
-    // the player turns off the GBA.
-    case STATE_FINISHED:
-        if (gUpdateSuccessful == 0)
-            *state = STATE_NO_NEED_TO_FIX;
-        else // "Your Berry Program has been updated"
-            MessageBox_Display(MSG_HAS_BEEN_UPDATED);
-        break;
-    case STATE_NO_NEED_TO_FIX:
-        // "There is no need to update your Berry Program"
-        MessageBox_Display(MSG_NO_NEED_TO_UPDATE);
-        break;
-    case STATE_ERROR_YEAR:
-        // "Unable to update the Berry Program"
-        MessageBox_Display(MSG_UNABLE_TO_UPDATE);
-        break;
-    case STATE_ERROR:
-        // "Unable to update the Berry Program"
-        MessageBox_Display(MSG_UNABLE_TO_UPDATE);
-        break;
+    //this is where the states will go to control the RTC screens
     }
-}
-
-static void Debug_LoadDigitsPal(void)
-{
-    s32 i;
-    const u16 * src;
-    vu16 * dest = (vu16 *)BG_PLTT + 1;
-    DmaFill16(3, RGB_WHITE, (vu16 *)BG_PLTT, BG_PLTT_SIZE);
-    src = sDebugPals;
-    for (i = 0; i < 4; i++)
-    {
-        *dest = *src;
-        dest += 16;
-        src++;
-    }
-}
-
-// Unused
-static void Debug_LoadDigits(void)
-{
-    DmaFill16(3, 0x1111, (void *)VRAM + 0x8420, 0x1800);
-    DmaCopy32(3, sDebugDigitsGfx, (void *)VRAM + 0x8600, 0x200);
-    Debug_LoadDigitsPal();
 }
