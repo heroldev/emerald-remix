@@ -9,6 +9,10 @@ The idea is that this ROM includes quality-of-life fixes to make Emerald the bes
 - Fixed Battle Factory bug that occured while determing IVs for opponent parties (`battle_tower.c`, line 1832)
 - Fixed Battle Dome IV bug where all opponent Pokémon had IVs of 3
 - Fixed Battle Dome bug where results were being unfairly determined due to variables not being re-initialized
+- Run indoors
+
+### WIP
+- Multiboot rom to reset the RTC on Ruby/Sapphire/Emerald
 
 ### Building/Setup
 To set up the repository, see [INSTALL.md](INSTALL.md).
