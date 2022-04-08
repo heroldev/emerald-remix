@@ -10,6 +10,7 @@ The idea is that this ROM includes quality-of-life fixes to make Emerald the bes
 - Fixed Battle Dome IV bug where all opponent Pokémon had IVs of 3
 - Fixed Battle Dome bug where results were being unfairly determined due to variables not being re-initialized
 - Run indoors
+- Modern Premier Balls (increments by 10 on all ball types)
 
 ### WIP
 - Multiboot rom to reset the RTC on Ruby/Sapphire/Emerald
