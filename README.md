@@ -14,6 +14,7 @@ The idea is that this ROM includes quality-of-life fixes to make Emerald the bes
 
 ### WIP
 - Multiboot rom to reset the RTC on Ruby/Sapphire/Emerald
+- Hash out Champion's Cup Dome-like Frontier Facility
 
 ### Building/Setup
 To set up the repository, see [INSTALL.md](INSTALL.md).
