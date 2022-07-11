@@ -6386,6 +6386,8 @@ u16 GetBattleBGM(void)
         case TRAINER_CLASS_PYRAMID_KING:
             return MUS_VS_FRONTIER_BRAIN;
         default:
+            if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
+                return MUS_RG_VS_TRAINER;
             return MUS_VS_TRAINER;
         }
     }
