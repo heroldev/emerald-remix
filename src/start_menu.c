@@ -1014,7 +1014,9 @@ static u8 SaveFileExistsCallback(void)
     }
     else
     {
-        ShowSaveMessage(gText_AlreadySavedFile, SaveConfirmOverwriteCallback);
+        // ShowSaveMessage(gText_AlreadySavedFile, SaveConfirmOverwriteCallback);
+        // the line above controls the "File already exists, overwrite?" menu
+        sSaveDialogCallback = SaveSavingMessageCallback;
     }
 
     return SAVE_IN_PROGRESS;
